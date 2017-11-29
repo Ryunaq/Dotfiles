@@ -37,21 +37,17 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-#rofi.color-window: #273238, #273238, #1e2529
-#bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -width 100 -padding 800 -opacity "85"
-#-lines 3 -eh 2 -width 100 -padding 800
-#-opacity "85" -bw 0 -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575cd"
-bindsym $mod+d exec rofi -show run -lines 3 -eh 2 -width 100 -padding 800
+bindsym $mod+d exec rofi -show run
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+j focus left
-bindsym $mod+k focus down
-bindsym $mod+l focus up
-bindsym $mod+semicolon focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -60,10 +56,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+j move left
-bindsym $mod+Shift+k move down
-bindsym $mod+Shift+l move up
-bindsym $mod+Shift+semicolon move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -72,7 +68,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+#bindsym $mod+h split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -81,7 +77,7 @@ bindsym $mod+v split v
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
+#bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
@@ -92,16 +88,16 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+space focus mode_toggle
 
 # focus the parent container
-bindsym $mod+a focus parent
+#bindsym $mod+a focus parent
 
 # focus the child container
 #bindsym $mod+d focus child
 
-set $workspace1 "1: Terminal"
-set $workspace2 "2: Desktop"
-set $workspace3 "3: Coding"
-set $workspace4 "4: Music"
-set $workspace5 "5: League"
+set $workspace1 ""
+set $workspace2 ""
+set $workspace3 ""
+set $workspace4 ""
+set $workspace5 ""
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
@@ -132,33 +128,15 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
-# resize window (you can also use the mouse for that)
-mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
+# Resizing
+bindsym $mod+Shift+y resize shrink width 10 px
+bindsym $mod+Shift+u resize shrink height 10 px
+bindsym $mod+Shift+o resize grow width 10 px
+bindsym $mod+Shift+i resize grow height 10 px
 
-        # Pressing left will shrink the window’s width.
-        # Pressing right will grow the window’s width.
-        # Pressing up will shrink the window’s height.
-        # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-bindsym $mod+r mode "resize"
+# Color stuff
 
 set $bg-color 	         #2f343f
 set $inactive-bg-color   #2f343f
@@ -176,33 +154,67 @@ client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color      
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        status_command i3blocks -c ~/.config/i3/i3blocks.conf
-        colors {
-        		background $bg-color
-        	    	separator #757575
-        		#                  border             background         text
-        		focused_workspace  $bg-color          $bg-color          $text-color
-        		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
-        		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
-        }
-        position top
+      colors {
+          background $bg-color
+              separator #757575
+          #                  border             background         text
+          focused_workspace  $bg-color          $bg-color          $text-color
+          inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+          urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+      }
+    	font pango:Hack 10
+    	position top
+    	tray_output none
+     status_command /home/fernando/.config/i3/bumblebee-status/bumblebee-status -m getcrypto pasink cpu customtime battery  weather -p interval=3 battery.device="BAT1" -t gruvbox-powerline
+     #status_command /home/fernando/.config/i3/bumblebee-status/bumblebee-status -m pasink cpu customtime battery  -p interval=3 battery.device="BAT1" -t gruvbox-powerline
+     # status_command /home/fernando/bumblebee-status/bumblebee-status -m getcrypto brightness pasink caffeine  memory cpu date time weather -p interval=2.5 time.format="%H:%M" date.format="%a, %b %d %Y"  -t gruvbox-powerline
 }
 
-# i3 Gaps:
+# Gaps:
 smart_borders on
-#smart_gaps on
+smart_gaps on
 gaps inner 20
 hide_edge_borders both
-for_window [class="^.*"] border pixel 0 
+for_window [class="^.*"] border pixel 0
 
-# Shorcuts:
-bindsym $mod+shift+x exec i3lock
-bindsym XF86AudioRaiseVolume exec pamixer -i 5 Master
-bindsym XF86AudioLowerVolume exec pamixer -d 5 Master
+#Math Windows binded to $mod+a
+for_window [instance="math"] floating enable
+for_window [instance="math"] resize set 800 300
+for_window [instance="math"] move position center
+bindsym $mod+a exec --no-startup-id urxvt -name "math" -fn "xft:mono:pixelsize=24" -e python -q 
+
+# Other bindings:
+bindsym XF86AudioRaiseVolume exec pamixer -i 5
+bindsym XF86AudioLowerVolume exec pamixer -d 5
+bindsym XF86AudioMute exec pamixer -t
+bindsym XF86MonBrightnessUp exec xbacklight -inc 5
+bindsym XF86MonBrightnessDown exec xbacklight -dec 5
+
+bindsym Mod1+Tab workspace next
+bindsym Mod1+Shift+Tab workspace prev
 bindsym Shift+Print exec escrotum -s -C
-set $mode_gaps Gaps: (o) outer, (i) inner
-set $mode_gaps_outer Outer Gaps: +|-|0 (local), Shift + +|-|0 (global)
-set $mode_gaps_inner Inner Gaps: +|-|0 (local), Shift + +|-|0 (global)
+bindsym Scroll_Lock exec bash /usr/bin/local/lockscript.sh
+
+bindsym $mod+Shift+e exec setxkbmap es && xmodmap /usr/bin/local/.speedswapper
+
+bindsym $mod+Shift+f exec firefox
+
+bindsym $mod+Shift+n exec setxkbmap us && xmodmap /usr/bin/local/.speedswapper
+
+bindsym $mod+Shift+p exec urxvt -e python '/HDD/Program Files/Journal/journal.py'
+#bindsym $mod+Shift+p exec urxvt -e echo 'asdf'
+#&& python journal.py
+
+bindsym $mod+r exec urxvt -e ranger
+
+bindsym $mod+s gaps inner current plus 5
+bindsym $mod+Shift+s gaps inner current minus 5
+
+bindsym $mod+shift+x exec bash /usr/bin/local/lockscript.sh
+
+bindsym $mod+z gaps outer current plus 5
+bindsym $mod+Shift+z gaps outer current minus 5
+
 bindsym $mod+Shift+g mode "$mode_gaps"
 
 mode "$mode_gaps" {
@@ -239,18 +251,11 @@ mode "$mode_gaps_outer" {
 
 
 # Exec
-exec --no-startup-id xmodmap -e "remove lock = Caps_Lock"
-exec --no-startup-id xmodmap -e "keycode 66 = Escape"
-exec --no-startup-id xmodmap -e " keycode 9 = Caps_Lock"
-exec --no-startup-id mount -t auto 
 exec --no-startup-id feh --bg-scale /home/fernando/.wallpaper.png
 exec --no-startup-id compton -f
-exec --no-startup-id xmodmap ~/.speedswapper
 exec --no-startup-id xrdb ~/.Xresources
-exec --no-startup-id xflux -l -12 -g 75
-
+exec --no-startup-id xmodmap /usr/bin/local/.speedswapper
 
 # Assigns
-#assign [class="URxvt"] $workspace1
-#assign [class="Firefox"] $workspace2
+assign [class="Firefox"] $workspace2
 assign [class="LeagueClienUx.exe"] $workspace5
