@@ -1,0 +1,15 @@
+#!/usr/bin/env python3
+
+import requests
+
+rbtc = requests.get('https://api.bitfinex.com/v1/pubticker/btcusd');
+reth = requests.get('https://api.bitfinex.com/v1/pubticker/ethusd');
+rbch = requests.get('https://api.bitfinex.com/v1/pubticker/bchusd');
+rltc = requests.get('https://api.bitfinex.com/v1/pubticker/ltcusd');
+
+tbtc = rbtc.json()
+teth = reth.json()
+tbch = rbch.json()
+tltc = rltc.json()
+
+print('Btc:' + tbtc['mid'] + "Eth: " + teth['mid'] + "Bch: " + tbch['mid'] + "Ltc: " + tltc['mid'])
