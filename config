@@ -13,11 +13,11 @@ set $mod Mod4
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:roboto 8
+# font pango:roboto 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
-font pango:DejaVu Sans Mono 8
+# font pango:DejaVu Sans Mono 18
 font pango:Terminus 11px
 
 # Before i3 v4.8, we used to recommend this one as the default:
@@ -93,11 +93,11 @@ bindsym $mod+space focus mode_toggle
 # focus the child container
 #bindsym $mod+d focus child
 
-set $workspace1 ""
-set $workspace2 ""
-set $workspace3 ""
-set $workspace4 ""
-set $workspace5 ""
+set $workspace1 "1"
+set $workspace2 "2"
+set $workspace3 "3"
+set $workspace4 "4"
+set $workspace5 "5"
 
 # switch to workspace
 bindsym $mod+1 workspace $workspace1
@@ -138,7 +138,7 @@ bindsym $mod+Shift+i resize grow height 10 px
 
 # Color stuff
 
-set $bg-color 	         #2f343f
+set $bg-color 	         #535861
 set $inactive-bg-color   #2f343f
 set $text-color          #f3f4f5
 set $inactive-text-color #676E7D
@@ -147,52 +147,72 @@ set $urgent-bg-color #E53935
 # window colors
 #                       border              background         text                 indicator
 client.focused          $bg-color           $bg-color          $text-color          #00ff00
-client.unfocused        $inactive-bg-color $inactive-bg-color $inactive-text-color #00ff00
-client.focused_inactive $inactive-bg-color $inactive-bg-color $inactive-text-color #00ff00
+client.unfocused        $inactive-bg-color  $inactive-bg-color $inactive-text-color #00ff00
+client.focused_inactive $inactive-bg-color  $inactive-bg-color $inactive-text-color #00ff00
 client.urgent           $urgent-bg-color    $urgent-bg-color   $text-color          #00ff00
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-      colors {
-          background $bg-color
-              separator #757575
-          #                  border             background         text
-          focused_workspace  $bg-color          $bg-color          $text-color
-          inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
-          urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
-      }
-    	font pango:Hack 10
-    	position top
-    	tray_output none
-     status_command /home/fernando/.config/i3/bumblebee-status/bumblebee-status -m getcrypto pasink cpu customtime battery  weather -p interval=3 battery.device="BAT1" -t gruvbox-powerline
-     #status_command /home/fernando/.config/i3/bumblebee-status/bumblebee-status -m pasink cpu customtime battery  -p interval=3 battery.device="BAT1" -t gruvbox-powerline
-     # status_command /home/fernando/bumblebee-status/bumblebee-status -m getcrypto brightness pasink caffeine  memory cpu date time weather -p interval=2.5 time.format="%H:%M" date.format="%a, %b %d %Y"  -t gruvbox-powerline
-}
+#bar {
+#      colors {
+#          background $bg-color
+#              separator #757575
+#          #                  border             background         text
+#          focused_workspace  $bg-color          $bg-color          $text-color
+#          inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
+#          urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+#      }
+#    	font pango:Hack 10
+#    	position top
+#      tray_output none
+#     status_command /home/fernando/.config/i3/bumblebee-status/bumblebee-status -m mpd getcrypto pasink cpu customtime weather -p interval=3 -t gruvbox-powerline
+#     # status_command /home/fernando/bumblebee-status/bumblebee-status -m getcrypto brightness pasink caffeine  memory cpu date time weather -p interval=2.5 time.format="%H:%M" date.format="%a, %b %d %Y"  -t gruvbox-powerline
+#}
 
 # Gaps:
 smart_borders on
 smart_gaps on
 gaps inner 20
 hide_edge_borders both
-for_window [class="^.*"] border pixel 0
+for_window [class="^.*"] border pixel 2
 
-#Math Windows binded to $mod+a
+# Math Windows binded to $mod+a
 for_window [instance="math"] floating enable
 for_window [instance="math"] resize set 800 300
 for_window [instance="math"] move position center
-bindsym $mod+a exec --no-startup-id urxvt -name "math" -fn "xft:mono:pixelsize=24" -e python -q 
+bindsym $mod+a exec --no-startup-id urxvt -name "math" -fn "xft:mono:pixelsize=24" -e python -q
+
+# Ncmpcpp Windows binded to $Mod+Shift+Play
+for_window [instance="mplayer"] floating enable
+for_window [instance="mplayer"] resize set 1300 780
+for_window [instance="mplayer"] move position center
+bindsym $mod+Shift+XF86AudioPlay exec --no-startup-id urxvt -name "mplayer" -e ncmpcpp
+
+# Feh with album art
+for_window [class="feh"] floating enable
+bindsym $Mod+Shift+XF86AudioStop exec sh ~/.ncmpcpp/albumart.sh
 
 # Other bindings:
-bindsym XF86AudioRaiseVolume exec pamixer -i 5
-bindsym XF86AudioLowerVolume exec pamixer -d 5
+bindsym XF86AudioRaiseVolume exec pamixer -i 3
+bindsym XF86AudioLowerVolume exec pamixer -d 3
 bindsym XF86AudioMute exec pamixer -t
 bindsym XF86MonBrightnessUp exec xbacklight -inc 5
 bindsym XF86MonBrightnessDown exec xbacklight -dec 5
 
+bindsym XF86AudioNext exec mpc -h 127.0.0.1 next
+bindsym XF86AudioPrev exec mpc -h 127.0.0.1 prev
+bindsym XF86AudioStop exec mpc -h 127.0.0.1 stop
+bindsym XF86AudioPlay exec mpc -h 127.0.0.1 toggle
+
+bindsym $Mod+XF86AudioNext exec mpc -h 127.0.0.1 random
+bindsym $Mod+XF86AudioPrev exec mpc -h 127.0.0.1 repeat
+bindsym $Mod+XF86AudioStop exec mpc -h 127.0.0.1 sendmessage mpdas unlove
+bindsym $Mod+XF86AudioPlay exec mpc -h 127.0.0.1 sendmessage mpdas love
+
 bindsym Mod1+Tab workspace next
 bindsym Mod1+Shift+Tab workspace prev
 bindsym Shift+Print exec escrotum -s -C
+bindsym Shift+$mod+Print exec escrotum -s
 bindsym Scroll_Lock exec bash /usr/bin/local/lockscript.sh
 
 bindsym $mod+Shift+e exec setxkbmap es && xmodmap /usr/bin/local/.speedswapper
@@ -252,9 +272,11 @@ mode "$mode_gaps_outer" {
 
 # Exec
 exec --no-startup-id feh --bg-scale /home/fernando/.wallpaper.png
+exec --no-startup-id mpd && mpdas
 exec --no-startup-id compton -f
 exec --no-startup-id xrdb ~/.Xresources
 exec --no-startup-id xmodmap /usr/bin/local/.speedswapper
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # Assigns
 assign [class="Firefox"] $workspace2
